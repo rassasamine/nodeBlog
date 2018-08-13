@@ -5,6 +5,7 @@ const expressEdge = require('express-edge');
 const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
 const Post = require('./database/models/Post')
+const fileUpload = require('express-fileupload');
 
 const app = express();
 
@@ -18,6 +19,9 @@ app.set('views', `${__dirname}/views`);
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
+
+app.use(fileUpload());
+
 
 /* app.get('/', (req, res) => {
     //  without templating
@@ -51,9 +55,16 @@ app.get('/posts/new', (req, res) => {
 })
 
 app.post('/posts/store', (req, res) => {
-    Post.create(req.body, (error, post) => {
-        res.redirect('/');
-    })
+    const {image} = req.files;
+    image.mv(path.resolve(__dirname,'public/posts',image.name), (error) => {
+        console.log(error);
+        Post.create({
+            ...req.body,
+            image: `/posts/${image.name}`
+        }, (error, post) => {
+            res.redirect('/');
+        })
+    });
 })
 
 app.listen(4000, () => {
