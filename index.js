@@ -23,13 +23,7 @@ app.use(fileUpload());
 
 
 
-//  creating a custom midlleware
-const validateCreatePostMidlleware = (req, res, next) => {
-    if(!req.files.image || !req.body.title || !req.body.title || !req.body.subtitle || !req.body.content){
-        res.redirect('/posts/new')
-    }
-    next();
-}
+const validateCreatePostMidlleware = require('./midlleware/storePost')
 
 //  specify when we want the midlleware be called
 app.use('/posts/store', validateCreatePostMidlleware);
