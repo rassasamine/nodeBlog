@@ -37,7 +37,8 @@ const aboutPageController = require('./controllers/aboutPage');
 const ContactPageController = require('./controllers/contactPage');
 const storePosteController = require('./controllers/storePost');
 const getPosteController = require('./controllers/getPost');
-
+const createUserController = require('./controllers/createUserPage');
+const storeUserController = require('./controllers/storeUser');
 
 app.get('/', homePageController)
 
@@ -51,7 +52,9 @@ app.post('/posts/store', storePosteController)
 
 app.get('/post/:id', getPosteController)
 
+app.get('/auth/register', createUserController)
 
+app.post('/users/register', storeUserController)
 
 app.listen(4000, () => {
     console.log('app listening on port 4000');
