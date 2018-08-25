@@ -9,6 +9,6 @@ const Post = require('../database/models/Post')
 //  async/await (es8 features) 
 module.exports = async (req, res) => {
     const posts = await Post.find({});
-    console.log(posts)
+    console.log(req.session);
     res.render('index', {posts: posts});
 }
